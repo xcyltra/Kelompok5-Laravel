@@ -5,12 +5,12 @@
             <img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            <a href="{{ route('profile.edit') }}" class="d-block"><b>{{ Auth::user()->name }}</b> | {{ Auth::user()->level }}</a>
         </div>
     </div>
 
     <!-- SidebarSearch Form -->
-    <div class="form-inline">
+    {{-- <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
             <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
@@ -19,7 +19,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -54,7 +54,7 @@
             <li class="nav-header">DATA LAINNYA</li>
             <li class="nav-item">
                 <a href="{{ route('jabatan.index') }}" class="nav-link {{ request()->is('data-jabatan') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tasks"></i>
+                    <i class="nav-icon fas fa-folder-open"></i>
                     <p>
                         Data Jabatan
                     </p>
@@ -62,7 +62,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->is('data-divisi') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tasks"></i>
+                    <i class="nav-icon fas fa-folder-open"></i>
                     <p>
                         Data Divisi
                     </p>
@@ -70,7 +70,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('skalaNilai.index') }}" class="nav-link {{ request()->is('data-skala-nilai') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tasks"></i>
+                    <i class="nav-icon fas fa-folder-open"></i>
                     <p>
                         Data Skala Nilai
                     </p>
@@ -78,7 +78,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('kategori.index') }}" class="nav-link {{ request()->is('data-kategori') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tasks"></i>
+                    <i class="nav-icon fas fa-folder-open"></i>
                     <p>
                         Data Kategori
                     </p>
