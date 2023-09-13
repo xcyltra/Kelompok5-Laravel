@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SkalaNilaiController;
 use App\Http\Controllers\PenilaianKerjaController;
 
 /*
@@ -38,6 +42,22 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/penilaian-kerja', [PenilaianKerjaController::class, 'index'])->name('penilaianKerja.index');
+});
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/data-jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
+});
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/data-divisi', [DivisiController::class, 'index'])->name('divisi.index');
+});
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/data-skala-nilai', [SkalaNilaiController::class, 'index'])->name('skalaNilai.index');
+});
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/data-kategori', [KategoriController::class, 'index'])->name('kategori.index');
 });
 
 require __DIR__.'/auth.php';

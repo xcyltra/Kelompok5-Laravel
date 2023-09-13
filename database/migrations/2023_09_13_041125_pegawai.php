@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_pegawai');
+            $table->enum('jk', ['Laki-laki','Perempuan']);
+            $table->date('tanggal_masuk');
+            $table->unsignedBigInteger('jabatan_id');
             $table->timestamps();
+
+            $table->foreign('jabatan_id')->references('id')->on('jabatans');
         });
     }
 
