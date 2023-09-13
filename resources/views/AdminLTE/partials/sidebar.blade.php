@@ -27,7 +27,7 @@
             <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
-                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('/dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-home"></i>
                     <p>
                         Dashboard
@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pegawai.index') }}" class="nav-link">
+                <a href="{{ route('pegawai.index') }}" class="nav-link {{ request()->is('pegawai') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                         Pegawai
@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('penilaianKerja.index') }}" class="nav-link">
+                <a href="{{ route('penilaianKerja.index') }}" class="nav-link {{ request()->is('penilaian-kerja') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tasks"></i>
                     <p>
                         Penilaian Kinerja
@@ -53,7 +53,7 @@
 
             <li class="nav-header">DATA LAINNYA</li>
             <li class="nav-item">
-                <a href="{{ route('jabatan.index') }}" class="nav-link">
+                <a href="{{ route('jabatan.index') }}" class="nav-link {{ request()->is('data-jabatan') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tasks"></i>
                     <p>
                         Data Jabatan
@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('divisi.index') }}" class="nav-link">
+                <a href="{{ route('divisi.index') }}" class="nav-link {{ request()->is('data-divisi') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tasks"></i>
                     <p>
                         Data Divisi
@@ -69,7 +69,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('skalaNilai.index') }}" class="nav-link">
+                <a href="{{ route('skalaNilai.index') }}" class="nav-link {{ request()->is('data-skala-nilai') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tasks"></i>
                     <p>
                         Data Skala Nilai
@@ -77,7 +77,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('kategori.index') }}" class="nav-link">
+                <a href="{{ route('kategori.index') }}" class="nav-link {{ request()->is('data-kategori') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-tasks"></i>
                     <p>
                         Data Kategori
