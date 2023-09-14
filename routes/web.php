@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/data-kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::post('/data-kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
 });
 
 require __DIR__.'/auth.php';

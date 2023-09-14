@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Kategori;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,12 @@ class KategoriController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $kategori = Kategori::all();
 
         return view('AdminLTE.kategori', [
-            'title' => 'Data Kategori'
+            'title' => 'Data Kategori',
+            'user' => $user,
+            'kategoris' => $kategori
         ]);
     }
 
@@ -27,7 +31,9 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('AdminLTE.crud.create.kategori', [
+            'title' => 'Tambah Data Kategori'
+        ]);
     }
 
     /**
@@ -35,7 +41,19 @@ class KategoriController extends Controller
      */
     public function store(StoreKategoriRequest $request)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isManager()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $kategori = new Kategori([
+            'nama_kategori' => $request->input('nama_kategori')
+        ]);
+        $kategori->save();
+
+        return redirect()->route('kategori.index');
     }
 
     /**
