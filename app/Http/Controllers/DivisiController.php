@@ -67,17 +67,31 @@ class DivisiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Divisi $divisi)
+    public function edit($id)
     {
-        //
+        $divisi = Divisi::findOrFail($id);
+
+        return view('AdminLTE.crud.edit.divisi', [
+            'title' => 'Edit Data Divisi',
+            'divisi' => $divisi
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDivisiRequest $request, Divisi $divisi)
+    public function update(UpdateDivisiRequest $request, $id)
     {
-        //
+        $divisi = Divisi::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $divisi->update([
+            'nama_divisi' => $validatedData['nama_divisi'],
+            // Jika ada kolom-kolom lain yang perlu diupdate, tambahkan di sini
+        ]);
+
+        return redirect()->route('divisi.index')->with('success', 'Data Divisi berhasil diperbarui.');
     }
 
     /**

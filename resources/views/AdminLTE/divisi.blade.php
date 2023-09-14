@@ -6,9 +6,11 @@
             <div class="card-header">
                 <h3 class="card-title">Tabel Data Divisi</h3>
                 @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
-                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'"><i class="fa fa-plus"></i> Tambah Data</button>
+                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'"><i
+                            class="fa fa-plus"></i> Tambah Data</button>
                 @else
-                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'" disabled><i class="fa fa-plus"></i> Tambah Data</button>
+                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'"
+                        disabled><i class="fa fa-plus"></i> Tambah Data</button>
                 @endif
             </div>
             <!-- /.card-header -->
@@ -27,8 +29,13 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $divisi->nama_divisi }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
+                                        <button class="btn btn-warning" onclick="window.location.href='{{ route('divisi.edit', ['divisi' => $divisi->id]) }}'"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @else
+                                        <button class="btn btn-warning" disabled><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" disabled><i class="fa fa-trash"></i></button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

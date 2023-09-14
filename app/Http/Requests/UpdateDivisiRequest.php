@@ -11,7 +11,7 @@ class UpdateDivisiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateDivisiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_divisi' => 'required|string|max:255', // Sesuaikan sesuai kebutuhan Anda
+            // ...
         ];
     }
 }
