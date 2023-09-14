@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-skala-nilai', [SkalaNilaiController::class, 'index'])->name('skalaNilai.index');
+    Route::get('/data-skala-nilai/create', [SkalaNilaiController::class, 'create'])->name('skalaNilai.create');
+    Route::post('/data-skala-nilai/store', [SkalaNilaiController::class, 'store'])->name('skalaNilai.store');
 });
 
 Route::group(['middleware' => 'auth'], function() {

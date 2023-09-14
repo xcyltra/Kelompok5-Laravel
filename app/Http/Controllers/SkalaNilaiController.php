@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\SkalaNilai;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,12 @@ class SkalaNilaiController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $skalaNilai = SkalaNilai::all();
 
         return view('AdminLTE.skalaNilai', [
-            'title' => 'Data Skala Nilai'
+            'title' => 'Data Skala Nilai',
+            'user' => $user,
+            'skalanilai' => $skalaNilai
         ]);
     }
 
@@ -27,7 +31,9 @@ class SkalaNilaiController extends Controller
      */
     public function create()
     {
-        //
+        return view('AdminLTE.crud.create.skalaNilai', [
+            'title' => 'Tambah Data Skala Nilai'
+        ]);
     }
 
     /**
@@ -35,7 +41,21 @@ class SkalaNilaiController extends Controller
      */
     public function store(StoreSkalaNilaiRequest $request)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isManager()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $skala = new SkalaNilai([
+            'nama_skala' => $request->input('nama_skala'),
+            'nilai_min' => $request->input('nilai_min'),
+            'nilai_max' => $request->input('nilai_max')
+        ]);
+        $skala->save();
+
+        return redirect()->route('skalaNilai.index');
     }
 
     /**
