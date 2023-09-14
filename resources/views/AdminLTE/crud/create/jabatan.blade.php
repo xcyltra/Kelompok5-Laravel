@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label>Nama Jabatan</label>
                         <input type="text" class="form-control" name="nama_jabatan" placeholder="Masukkan Nama Jabatan"
-                            maxlength="100">
+                            maxlength="100" required>
                     </div>
                 </div>
                 <!-- /.card-body -->

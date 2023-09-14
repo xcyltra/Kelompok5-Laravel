@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Nama Kategori</label>
-                        <input type="text" class="form-control" name="nama_kategori" placeholder="Masukkan Nama Kategori" maxlength="100">
+                        <input type="text" class="form-control" name="nama_kategori" placeholder="Masukkan Nama Kategori" maxlength="100" required>
                     </div>
                 </div>
                 <!-- /.card-body -->
