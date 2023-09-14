@@ -16,9 +16,12 @@ class DivisiController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $divisi = Divisi::all();
 
         return view('AdminLTE.divisi', [
-            'title' => 'Data Divisi'
+            'title' => 'Data Divisi',
+            'user' => $user,
+            'divisions' => $divisi
         ]);
     }
 
