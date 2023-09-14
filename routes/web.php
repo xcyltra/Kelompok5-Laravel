@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
+    Route::get('/data-jabatan/create', [JabatanController::class, 'create'])->name('jabatan.create');
+    Route::post('/data-jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
 });
 
 Route::group(['middleware' => 'auth'], function() {

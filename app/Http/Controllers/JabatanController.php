@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisi;
 use App\Models\Jabatan;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreJabatanRequest;
@@ -16,9 +18,12 @@ class JabatanController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $jabatan = Jabatan::with('divisi')->get();
 
         return view('AdminLTE.jabatan', [
-            'title' => 'Data Jabatan'
+            'title' => 'Data Jabatan',
+            'user' => $user,
+            'jabatans' => $jabatan
         ]);
     }
 
@@ -27,7 +32,12 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        //
+        $divisis = Divisi::all();
+
+        return view('AdminLTE/crud/create/jabatan', [
+            'title' => 'Tambah Data Jabatan',
+            'divisis' => $divisis
+        ]);
     }
 
     /**
@@ -35,7 +45,26 @@ class JabatanController extends Controller
      */
     public function store(StoreJabatanRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_jabatan' => 'required|max:100',
+            'divisi_id' => 'required|exists:divisis,id', // Pastikan divisi_id sesuai dengan ID di tabel divisis
+        ]);
+
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isManager()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $jabatan = new Jabatan([
+            'nama_jabatan' => $validatedData['nama_jabatan'],
+        ]);
+
+        $divisi = Divisi::find($validatedData['divisi_id']);
+        $divisi->jabatans()->save($jabatan);
+
+        return redirect()->route('jabatan.index');
     }
 
     /**
