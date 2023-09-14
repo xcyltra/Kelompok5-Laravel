@@ -5,7 +5,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Tabel Data Divisi</h3>
-                <button class="btn btn-info float-right"><i class="fa fa-plus"></i> Tambah Data</button>
+                @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
+                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'"><i class="fa fa-plus"></i> Tambah Data</button>
+                @else
+                    <button class="btn btn-info float-right" onclick="window.location.href='{{ route('divisi.create') }}'" disabled><i class="fa fa-plus"></i> Tambah Data</button>
+                @endif
             </div>
             <!-- /.card-header -->
             <div class="card-body">

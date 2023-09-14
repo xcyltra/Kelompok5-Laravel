@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-divisi', [DivisiController::class, 'index'])->name('divisi.index');
+    Route::get('/data-divisi/create', [DivisiController::class, 'create'])->name('divisi.create');
+    Route::post('/data-divisi/store', [DivisiController::class, 'store'])->name('divisi.store');
 });
 
 Route::group(['middleware' => 'auth'], function() {

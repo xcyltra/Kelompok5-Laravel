@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Divisi;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDivisiRequest;
@@ -30,7 +31,9 @@ class DivisiController extends Controller
      */
     public function create()
     {
-        //
+        return view('AdminLTE.crud.create.divisi', [
+            'title' => 'Tambah Data Divisi'
+        ]);
     }
 
     /**
@@ -38,7 +41,19 @@ class DivisiController extends Controller
      */
     public function store(StoreDivisiRequest $request)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isManager()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $divisi = new Divisi([
+            'nama_divisi' => $request->input('nama_divisi')
+        ]);
+        $divisi->save();
+
+        return redirect()->route('divisi.index');
     }
 
     /**
