@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jabatan;
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePegawaiRequest;
@@ -16,9 +18,12 @@ class PegawaiController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $pegawai = Pegawai::with('jabatan')->get();
 
         return view('AdminLTE.pegawai', [
-            'title' => 'Pegawai'
+            'title' => 'Data Pegawai',
+            'user' => $user,
+            'pegawais' => $pegawai
         ]);
     }
 
@@ -27,7 +32,12 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        $jabatans = Jabatan::all();
+
+        return view('AdminLTE.crud.create.pegawai', [
+            'title' => 'Tambah Data Pegawai',
+            'jabatans' => $jabatans
+        ]);
     }
 
     /**
@@ -35,7 +45,32 @@ class PegawaiController extends Controller
      */
     public function store(StorePegawaiRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_pegawai' => 'required|max:100',
+            'jk' => 'required',
+            'tanggal_masuk' => 'required',
+            'jabatan_id' => 'required|exists:jabatans,id', // Pastikan divisi_id sesuai dengan ID di tabel divisis
+        ]);
+
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isManager()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $pegawai = new Pegawai([
+            'nama_pegawai' => $validatedData['nama_pegawai'],
+            'jk' => $validatedData['jk'],
+            'tanggal_masuk' => $validatedData['tanggal_masuk'],
+        ]);
+
+        $jabatan = Jabatan::find($validatedData['jabatan_id']);
+        $pegawai->jabatan()->associate($jabatan);
+
+        $pegawai->save();
+
+        return redirect()->route('pegawai.index');
     }
 
     /**

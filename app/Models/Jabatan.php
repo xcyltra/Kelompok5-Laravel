@@ -15,4 +15,9 @@ class Jabatan extends Model
     {
         return $this->belongsTo(Divisi::class, 'divisi_id'); // Gantilah 'divisi_id' dengan nama kolom yang sesuai dalam tabel Jabatan
     }
+
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class); // Ini mengasumsikan bahwa tabel Jabatan memiliki kolom divisi_id
+    }
 }
