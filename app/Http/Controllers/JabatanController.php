@@ -101,13 +101,7 @@ class JabatanController extends Controller
 
         $jabatan->update([
             'nama_jabatan' => $validatedData['nama_jabatan'],
-        ]);
-
-        $divisi = $jabatan->divisi;
-
-        $divisi->update([
             'divisi_id' => $validatedData['divisi_id'],
-            // Tambahkan atribut-atribut lain yang perlu diperbarui di divisi
         ]);
 
         return redirect()->route('jabatan.index')->with('success', 'Data jabatan berhasil diperbarui.');

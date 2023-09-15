@@ -37,7 +37,7 @@
                     <div class="form-group">
                         <label>Nama Jabatan</label>
                         <select name="jabatan_id" class="form-control">
-                            <option value="">Pilih Divisi</option>
+                            <option value="">Pilih Jabatan</option>
                             @foreach ($jabatans as $jabatan)
                                 <option value="{{ $jabatan->id }}" @if ($pegawai->jabatan_id === $jabatan->id) selected @endif>
                                     {{ $jabatan->nama_jabatan }}</option>

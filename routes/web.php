@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
     Route::get('/pegawai/edit/{pegawai}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
     Route::put('/pegawai/update/{pegawai}', [PegawaiController::class, 'update'])->name('pegawai.update');
+    Route::delete('/pegawai/delete/{pegawai}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 });
 
 Route::group(['middleware' => 'auth'], function() {
