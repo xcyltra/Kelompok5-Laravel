@@ -78,17 +78,39 @@ class JabatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jabatan $jabatan)
+    public function edit($id)
     {
-        //
+        $jabatan = Jabatan::with('divisi')->findOrFail($id);
+        $divisis = Divisi::all();
+
+        return view('AdminLTE.crud.edit.jabatan', [
+            'title' => 'Edit Data Jabatan',
+            'jabatan' => $jabatan,
+            'divisis' => $divisis
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJabatanRequest $request, Jabatan $jabatan)
+    public function update(UpdateJabatanRequest $request, $id)
     {
-        //
+        $jabatan = Jabatan::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $jabatan->update([
+            'nama_jabatan' => $validatedData['nama_jabatan'],
+        ]);
+
+        $divisi = $jabatan->divisi;
+
+        $divisi->update([
+            'divisi_id' => $validatedData['divisi_id'],
+            // Tambahkan atribut-atribut lain yang perlu diperbarui di divisi
+        ]);
+
+        return redirect()->route('jabatan.index')->with('success', 'Data jabatan berhasil diperbarui.');
     }
 
     /**

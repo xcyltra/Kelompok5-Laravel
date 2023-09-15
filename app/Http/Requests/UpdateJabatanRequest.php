@@ -11,7 +11,7 @@ class UpdateJabatanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateJabatanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_jabatan' => 'required|string|max:255',
+            'divisi_id' => 'required|exists:divisis,id',
         ];
     }
 }

@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
     Route::get('/data-jabatan/create', [JabatanController::class, 'create'])->name('jabatan.create');
     Route::post('/data-jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
+    Route::get('/data-jabatan/edit/{jabatan}', [JabatanController::class, 'edit'])->name('jabatan.edit');
+    Route::put('/data-jabatan/update/{jabatan}', [JabatanController::class, 'update'])->name('jabatan.update');
 });
 
 Route::group(['middleware' => 'auth'], function() {
