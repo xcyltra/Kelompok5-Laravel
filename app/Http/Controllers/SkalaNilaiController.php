@@ -69,17 +69,33 @@ class SkalaNilaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SkalaNilai $skalaNilai)
+    public function edit($id)
     {
-        //
+        $skala = SkalaNilai::findOrFail($id);
+
+        return view('AdminLTE.crud.edit.skalaNilai', [
+            'title' => 'Edit Data Skala Nilai',
+            'skalaNilai' => $skala
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSkalaNilaiRequest $request, SkalaNilai $skalaNilai)
+    public function update(UpdateSkalaNilaiRequest $request, $id)
     {
-        //
+        $skala = SkalaNilai::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $skala->update([
+            'nama_skala'=> $validatedData['nama_skala'],
+            'nilai_min'=> $validatedData['nilai_min'],
+            'nilai_max'=> $validatedData['nilai_max'],
+            // Jik_maxa kolom-kolom lain yang _maxu diupdate, tambahkan di sini
+        ]);
+
+        return redirect()->route('skalaNilai.index')->with('success', 'Data Skala Nilai berhasil diperbarui.');
     }
 
     /**

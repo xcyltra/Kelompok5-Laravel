@@ -31,8 +31,13 @@
                                 <td>{{ $skala->nilai_min }}</td>
                                 <td>{{ $skala->nilai_max }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
+                                        <button class="btn btn-warning" onclick="window.location.href='{{ route('skalaNilai.edit', ['skalaNilai' => $skala->id]) }}'"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @else
+                                        <button class="btn btn-warning" disabled><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" disabled><i class="fa fa-trash"></i></button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

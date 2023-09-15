@@ -11,7 +11,7 @@ class UpdateSkalaNilaiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateSkalaNilaiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_skala' => 'required|string|max:255', 
+            'nilai_min' => 'required|string|max:2',
+            'nilai_max' => 'required|string|max:3',// Sesuaikan sesuai kebutuhan Anda
+            // ...
         ];
     }
 }
