@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Tabel Data Kategori</h3>
+                <h3 class="card-title">Tabel Data Pegawai</h3>
                 @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
                     <button class="btn btn-info float-right" onclick="window.location.href='{{ route('pegawai.create') }}'"><i class="fa fa-plus"></i> Tambah Data</button>
                 @else
@@ -29,12 +29,19 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $pegawai->nama_pegawai }}</td>
-                                <td>{{ $pegawai->jk }}</td>
-                                <td>{{ $pegawai->tanggal_masuk }}</td>
+                                <td class="text-center">{{ $pegawai->jk }}</td>
+                                <td class="text-center">{{ $pegawai->tanggal_masuk }}</td>
                                 <td>{{ $pegawai->jabatan->nama_jabatan }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
+                                        <button class="btn btn-warning"
+                                            onclick="window.location.href='{{ route('pegawai.edit', ['pegawai' => $pegawai->id]) }}'"><i
+                                                class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    @else
+                                        <button class="btn btn-warning" disabled><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" disabled><i class="fa fa-trash"></i></button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
