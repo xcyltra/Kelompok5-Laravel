@@ -63,3 +63,5 @@
         });
     });
 </script>
+<!-- SweetAlert2 -->
+<script src="{{ asset('lte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>

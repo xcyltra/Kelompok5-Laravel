@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/data-divisi/store', [DivisiController::class, 'store'])->name('divisi.store');
     Route::get('/data-divisi/edit/{divisi}', [DivisiController::class, 'edit'])->name('divisi.edit');
     Route::put('/data-divisi/update/{divisi}', [DivisiController::class, 'update'])->name('divisi.update');
+    Route::delete('/data-divisi/delete/{divisi}', [DivisiController::class, 'destroy'])->name('divisi.destroy');
 });
 
 Route::group(['middleware' => 'auth'], function() {

@@ -97,8 +97,21 @@ class DivisiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Divisi $divisi)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $divisi = Divisi::findOrFail($id);
+
+        if ($divisi->delete()) {
+            return redirect()->route('divisi.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('divisi.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
