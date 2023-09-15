@@ -109,13 +109,7 @@ class PegawaiController extends Controller
             'nama_pegawai' => $validatedData['nama_pegawai'],
             'jk' => $validatedData['jk'],
             'tanggal_masuk' => $validatedData['tanggal_masuk'],
-        ]);
-
-        $jabatan = $pegawai->jabatan;
-
-        $jabatan->update([
             'jabatan_id' => $validatedData['jabatan_id'],
-            // Tambahkan atribut-atribut lain yang perlu diperbarui di divisi
         ]);
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui.');
@@ -124,8 +118,21 @@ class PegawaiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $pegawai = Pegawai::findOrFail($id);
+
+        if ($pegawai->delete()) {
+            return redirect()->route('pegawai.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('pegawai.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
