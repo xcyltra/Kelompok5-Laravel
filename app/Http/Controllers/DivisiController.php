@@ -108,6 +108,10 @@ class DivisiController extends Controller
 
         $divisi = Divisi::findOrFail($id);
 
+        if ($divisi->jabatans()->count() > 0) {
+            return redirect()->route('divisi.index')->with('delete_error', 'Tidak dapat menghapus divisi yang memiliki jabatan terkait.');
+        }
+
         if ($divisi->delete()) {
             return redirect()->route('divisi.index')->with('delete_success', 'Data berhasil dihapus.');
         } else {
