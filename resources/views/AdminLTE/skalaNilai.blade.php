@@ -33,7 +33,15 @@
                                 <td class="text-center">
                                     @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isManager()))
                                         <button class="btn btn-warning" onclick="window.location.href='{{ route('skalaNilai.edit', ['skalaNilai' => $skala->id]) }}'"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+
+                                        <form action="{{ route('skalaNilai.destroy', ['skalaNilai' => $skala->id]) }}"
+                                            method="POST" style="display:inline-block"
+                                            id="delete-form-{{ $skala->id }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger delete-button"
+                                                data-id="{{ $skala->id }}"><i class="fa fa-trash"></i></button>
+                                        </form>
                                     @else
                                         <button class="btn btn-warning" disabled><i class="fa fa-edit"></i></button>
                                         <button class="btn btn-danger" disabled><i class="fa fa-trash"></i></button>
@@ -45,5 +53,56 @@
                 </table>
             </div>
         </div>
+        <script>
+            // Delete Function
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.delete-button');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const dataId = button.getAttribute('data-id');
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Apakah Anda Yakin Data ini Dihapus?',
+                            showDenyButton: true,
+                            showCancelButton: false,
+                            confirmButtonText: '<i class="fa fa-trash"></i> Ya, Hapus!',
+                            confirmButtonColor: 'red',
+                            denyButtonText: `<i class="fa fa-times"></i> Batal`,
+                            denyButtonColor: 'grey',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const form = document.getElementById(`delete-form-${dataId}`);
+                                form.submit();
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+        @if (session('delete_success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Data Berhasil di Hapus.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                });
+            </script>
+        @endif
+        @if (session('delete_error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan.',
+                        text: '{{ session('delete_error') }}'
+                    });
+                });
+            </script>
+        @endif
     </div>
 @endsection
