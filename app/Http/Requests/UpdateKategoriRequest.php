@@ -11,7 +11,7 @@ class UpdateKategoriRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateKategoriRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_kategori' => 'required|string|max:255', // Sesuaikan sesuai kebutuhan Anda
+            // ...
         ];
     }
 }

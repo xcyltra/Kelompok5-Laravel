@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/data-kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/data-kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
     Route::post('/data-kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/data-kategori/edit/{kategori}', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/data-kategori/update/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
 });
 
 require __DIR__.'/auth.php';

@@ -67,17 +67,31 @@ class KategoriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kategori $kategori)
+    public function edit($id)
     {
-        //
+        $kategori = Kategori::findOrFail($id);
+
+        return view('AdminLTE.crud.edit.kategori', [
+            'title' => 'Edit Data Kategori',
+            'kategori' => $kategori
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKategoriRequest $request, Kategori $kategori)
+    public function update(UpdateKategoriRequest $request, $id)
     {
-        //
+        $kategori = Kategori::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $kategori->update([
+            'nama_kategori' => $validatedData['nama_kategori'],
+            // Jika ada kolom-kolom lain yang perlu diupdate, tambahkan di sini
+        ]);
+
+        return redirect()->route('kategori.index')->with('success', 'Data Kategori berhasil diperbarui.');
     }
 
     /**
