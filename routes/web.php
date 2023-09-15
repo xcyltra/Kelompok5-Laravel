@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/data-skala-nilai/store', [SkalaNilaiController::class, 'store'])->name('skalaNilai.store');
     Route::get('/data-skala-nilai/edit/{skalaNilai}', [SkalaNilaiController::class, 'edit'])->name('skalaNilai.edit');
     Route::put('/data-skala-nilai/update/{skalaNilai}', [SkalaNilaiController::class, 'update'])->name('skalaNilai.update');
+    Route::delete('/data-skala-nilai/delete/{skalaNilai}', [SkalaNilaiController::class, 'destroy'])->name('skalaNilai.destroy');
 });
 
 Route::group(['middleware' => 'auth'], function() {
@@ -79,6 +80,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/data-kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
     Route::get('/data-kategori/edit/{kategori}', [KategoriController::class, 'edit'])->name('kategori.edit');
     Route::put('/data-kategori/update/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/data-kategori/delete/{kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 });
 
 require __DIR__.'/auth.php';

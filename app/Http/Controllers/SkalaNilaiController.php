@@ -101,8 +101,21 @@ class SkalaNilaiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SkalaNilai $skalaNilai)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $skala = SkalaNilai::findOrFail($id);
+
+        if ($skala->delete()) {
+            return redirect()->route('skalaNilai.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('skalaNilai.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }

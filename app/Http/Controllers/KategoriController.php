@@ -97,8 +97,21 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategori $kategori)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $kategori = Kategori::findOrFail($id);
+
+        if ($kategori->delete()) {
+            return redirect()->route('kategori.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('kategori.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
