@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/data-jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
     Route::get('/data-jabatan/edit/{jabatan}', [JabatanController::class, 'edit'])->name('jabatan.edit');
     Route::put('/data-jabatan/update/{jabatan}', [JabatanController::class, 'update'])->name('jabatan.update');
+    Route::delete('/data-jabatan/delete/{jabatan}', [JabatanController::class, 'destroy'])->name('jabatan.destroy');
 });
 
 Route::group(['middleware' => 'auth'], function() {
