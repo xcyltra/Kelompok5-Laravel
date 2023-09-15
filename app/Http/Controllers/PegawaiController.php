@@ -84,17 +84,41 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pegawai $pegawai)
+    public function edit($id)
     {
-        //
+        $pegawai = Pegawai::with('jabatan')->findOrFail($id);
+        $jabatans = Jabatan::all();
+
+        return view('AdminLTE.crud.edit.pegawai', [
+            'title' => 'Edit Data Pegawai',
+            'pegawai' => $pegawai,
+            'jabatans' => $jabatans,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePegawaiRequest $request, Pegawai $pegawai)
+    public function update(UpdatePegawaiRequest $request, $id)
     {
-        //
+        $pegawai = Pegawai::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $pegawai->update([
+            'nama_pegawai' => $validatedData['nama_pegawai'],
+            'jk' => $validatedData['jk'],
+            'tanggal_masuk' => $validatedData['tanggal_masuk'],
+        ]);
+
+        $jabatan = $pegawai->jabatan;
+
+        $jabatan->update([
+            'jabatan_id' => $validatedData['jabatan_id'],
+            // Tambahkan atribut-atribut lain yang perlu diperbarui di divisi
+        ]);
+
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     /**

@@ -11,7 +11,7 @@ class UpdatePegawaiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdatePegawaiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_pegawai' => 'required|string|max:255',
+            'jk' => 'required',
+            'tanggal_masuk' => 'required|date',
+            'jabatan_id' => 'required|exists:jabatans,id',
         ];
     }
 }
