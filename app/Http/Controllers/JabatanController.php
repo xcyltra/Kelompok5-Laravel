@@ -116,8 +116,25 @@ class JabatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jabatan $jabatan)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $jabatan = Jabatan::findOrFail($id);
+
+        if ($jabatan->pegawai()->count() > 0) {
+            return redirect()->route('jabatan.index')->with('delete_error', 'Tidak dapat menghapus jabatan yang memiliki pegawai terkait.');
+        }
+
+        if ($jabatan->delete()) {
+            return redirect()->route('jabatan.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('jabatan.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
