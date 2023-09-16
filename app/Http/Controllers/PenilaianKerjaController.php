@@ -141,8 +141,21 @@ class PenilaianKerjaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PenilaianKerja $penilaianKerja)
+    public function destroy($id)
     {
-        //
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isEvaluator()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $penilaianKerja = PenilaianKerja::findOrFail($id);
+
+        if ($penilaianKerja->delete()) {
+            return redirect()->route('penilaianKerja.index')->with('delete_success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->route('penilaianKerja.index')->with('delete_error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
