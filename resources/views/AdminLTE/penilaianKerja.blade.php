@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Tabel Data Pegawai</h3>
+                <h3 class="card-title">Tabel Data Penilaian Kinerja</h3>
                 @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isEvaluator()))
                     <button class="btn btn-info float-right" onclick="window.location.href='{{ route('penilaianKerja.create') }}'"><i
                             class="fa fa-plus"></i> Tambah Data</button>
