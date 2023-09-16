@@ -10,4 +10,9 @@ class SkalaNilai extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function penilaianKerja()
+    {
+        return $this->hasMany(PenilaianKerja::class); // Ini mengasumsikan bahwa tabel Jabatan memiliki kolom divisi_id
+    }
 }

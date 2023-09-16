@@ -40,4 +40,13 @@ class User extends Authenticatable
     public function isManager(){
         return $this->level === 'Manager';
     }
+
+    public function isEvaluator(){
+        return $this->level === 'Evaluator';
+    }
+
+    public function penilaianKerja()
+    {
+        return $this->hasMany(PenilaianKerja::class); // Ini mengasumsikan bahwa tabel Jabatan memiliki kolom divisi_id
+    }
 }

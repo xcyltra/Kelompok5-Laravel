@@ -15,4 +15,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Jabatan::class);
     }
+
+    public function penilaianKerja()
+    {
+        return $this->hasMany(PenilaianKerja::class); // Ini mengasumsikan bahwa tabel Jabatan memiliki kolom divisi_id
+    }
 }
