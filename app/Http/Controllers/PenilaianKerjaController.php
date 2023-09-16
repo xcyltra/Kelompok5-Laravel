@@ -16,9 +16,12 @@ class PenilaianKerjaController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $penilaianKerja = PenilaianKerja::with(['pegawai', 'user', 'kategori', 'skalaNilai'])->where('evaluator', $user->id)->get();
 
         return view('AdminLTE.penilaianKerja', [
-            'title' => 'Penilaian Kerja'
+            'title' => 'Penilaian Kinerja',
+            'user' => $user,
+            'penilaianKerja' => $penilaianKerja
         ]);
     }
 

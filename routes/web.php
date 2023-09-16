@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/penilaian-kerja', [PenilaianKerjaController::class, 'index'])->name('penilaianKerja.index');
+    Route::get('/penilaian-kerja/create', [PenilaianKerjaController::class, 'create'])->name('penilaianKerja.create');
+    Route::post('/penilaian-kerja/store', [PenilaianKerjaController::class, 'store'])->name('penilaianKerja.store');
+    Route::get('/penilaian-kerja/edit/{penilaianKerja}', [PenilaianKerjaController::class, 'edit'])->name('penilaianKerja.edit');
+    Route::put('/penilaian-kerja/update/{penilaianKerja}', [PenilaianKerjaController::class, 'update'])->name('penilaianKerja.update');
+    Route::delete('/penilaian-kerja/delete/{penilaianKerja}', [PenilaianKerjaController::class, 'destroy'])->name('penilaianKerja.destroy');
 });
 
 Route::group(['middleware' => 'auth'], function() {

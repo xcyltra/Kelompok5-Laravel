@@ -10,4 +10,9 @@ class Kategori extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function penilaianKerja()
+    {
+        return $this->hasMany(PenilaianKerja::class, 'kategori_id');
+    }
 }
