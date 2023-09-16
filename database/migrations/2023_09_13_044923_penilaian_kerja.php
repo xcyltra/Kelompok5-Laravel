@@ -17,14 +17,14 @@ return new class extends Migration
             $table->date('tgl_review');
             $table->unsignedBigInteger('evaluator');
             $table->unsignedBigInteger('kategori_id');
-            $table->unsignedBigInteger('nilai');
+            $table->unsignedBigInteger('nilai_id');
             $table->text('komentar');
             $table->timestamps();
 
             $table->foreign('pegawai_id')->references('id')->on('pegawais');
             $table->foreign('evaluator')->references('id')->on('users');
             $table->foreign('kategori_id')->references('id')->on('kategoris');
-            $table->foreign('nilai')->references('id')->on('skala_nilais');
+            $table->foreign('nilai_id')->references('id')->on('skala_nilais');
         });
     }
 
