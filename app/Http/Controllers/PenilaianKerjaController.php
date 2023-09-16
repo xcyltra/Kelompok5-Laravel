@@ -97,17 +97,45 @@ class PenilaianKerjaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PenilaianKerja $penilaianKerja)
+    public function edit($id)
     {
-        //
+        $penilaianKerja = PenilaianKerja::with(['pegawai', 'user', 'kategori', 'skalaNilai'])->findOrFail($id);
+        $pegawais = Pegawai::all();
+        $users = User::all();
+        $kategoris = Kategori::all();
+        $skalaNilai = SkalaNilai::all();
+
+        return view('AdminLTE.crud.edit.penilaianKerja', [
+            'title' => 'Edit Data Penilaian Kinerja',
+            'penilaianKerja' => $penilaianKerja,
+            'pegawais' => $pegawais,
+            'users' => $users,
+            'kategoris' => $kategoris,
+            'skalaNilai' => $skalaNilai,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePenilaianKerjaRequest $request, PenilaianKerja $penilaianKerja)
+    public function update(UpdatePenilaianKerjaRequest $request, $id)
     {
-        //
+        $penilaianKerja = PenilaianKerja::findOrFail($id);
+
+        dd($request->all());
+
+        $validatedData = $request->validated();
+
+        $penilaianKerja->update([
+            'pegawai_id' => $validatedData['pegawai_id'],
+            'tgl_review' => $validatedData['tgl_review'],
+            'evaluator' => $validatedData['evaluator'],
+            'kategori_id' => $validatedData['kategori_id'],
+            'nilai_id' => $validatedData['nilai_id'],
+            'komentar' => $validatedData['komentar'],
+        ]);
+
+        return redirect()->route('penilaianKerja.index');
     }
 
     /**
