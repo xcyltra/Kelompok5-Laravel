@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
+use App\Models\Pegawai;
 use App\Models\PenilaianKerja;
+use App\Models\SkalaNilai;
+use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePenilaianKerjaRequest;
@@ -30,7 +34,18 @@ class PenilaianKerjaController extends Controller
      */
     public function create()
     {
-        //
+        $pegawais = Pegawai::all();
+        $user = Auth::user();
+        $kategoris = Kategori::all();
+        $nilais = SkalaNilai::all();
+
+        return view('AdminLTE.crud.create.penilaianKerja', [
+            'title' => 'Tambah Data Penilaian Kerja',
+            'pegawais' => $pegawais,
+            'user' => $user,
+            'kategoris' => $kategoris,
+            'nilais' => $nilais,
+        ]);
     }
 
     /**
@@ -38,7 +53,37 @@ class PenilaianKerjaController extends Controller
      */
     public function store(StorePenilaianKerjaRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'pegawai_id' => 'required|exists:pegawais,id',
+            'tgl_review' => 'required',
+            'evaluator' => 'required|exists:users,id',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'nilai_id' => 'required|exists:skala_nilais,id',
+            'komentar' => 'required|max:255',
+        ]);
+
+        $userAuth = Auth::user();
+        $user = User::find($userAuth->id);
+
+        if (!$user->isAdmin() && !$user->isEvaluator()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $penilaianData = [
+            'tgl_review' => $validatedData['tgl_review'],
+            'komentar' => $validatedData['komentar'],
+        ];
+
+        $penilaianKerja = new PenilaianKerja($penilaianData);
+
+        $penilaianKerja->pegawai()->associate($validatedData['pegawai_id']);
+        $penilaianKerja->user()->associate($validatedData['evaluator']);
+        $penilaianKerja->kategori()->associate($validatedData['kategori_id']);
+        $penilaianKerja->skalaNilai()->associate($validatedData['nilai_id']);
+
+        $penilaianKerja->save();
+
+        return redirect()->route('penilaianKerja.index');
     }
 
     /**

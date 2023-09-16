@@ -28,7 +28,7 @@ class PenilaianKerja extends Model
 
     public function skalaNilai()
     {
-        return $this->belongsTo(SkalaNilai::class, 'nilai');
+        return $this->belongsTo(SkalaNilai::class, 'nilai_id');
     }
 
 }
