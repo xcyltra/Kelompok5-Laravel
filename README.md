@@ -64,3 +64,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Email & Password Administrator
+
+You Need to do Migration First and then Do the "php artisan db:seed --class=DatabaseSeeder" on Terminal for Seed the Users Table Data. After that, Insert this on the Login Form:
+
+Email: admin@smkn2balikpapan.sch.id
+Password: 1admin2345
